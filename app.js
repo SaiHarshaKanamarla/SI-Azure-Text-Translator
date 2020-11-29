@@ -100,5 +100,33 @@ app.post('/api/transliterate',(req,res)=>{
     })
 })
 
+//Get sentence length
+app.post('/api/length',(req,res)=>{
+    axios({
+        baseURL: endpoint,
+        url: '/translate',
+        method: 'post',
+        headers: {
+            'Ocp-Apim-Subscription-Key': subscriptionKey,
+            'Ocp-Apim-Subscription-Region': location,
+            'Content-type': 'application/json',
+            'X-ClientTraceId': uuidv4().toString()
+        },
+        params: {
+            'api-version': '3.0',
+            'to': req.body.to,
+            'includeSentenceLength': true
+        },
+        data: [{
+            'text': req.body.text
+        }],
+        responseType: 'json'
+    }).then(function(response){
+        console.log(JSON.stringify(response.data, null, 4));
+        res.send(JSON.stringify(response.data, null, 4))
+    }).catch((err)=>{
+        res.status(404).send(err);
+    })
+})
 
 app.listen(port);
