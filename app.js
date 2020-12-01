@@ -187,5 +187,35 @@ app.post('/api/lookup',(req,res)=>{
     })
 })
 
+//Dictionary examples (translations in context)
+app.post('/api/dictionary-examples',(req,res)=>{
+    axios({
+        baseURL: endpoint,
+        url: '/dictionary/lookup',
+        method: 'post',
+        headers: {
+            'Ocp-Apim-Subscription-Key': subscriptionKey,
+            'Ocp-Apim-Subscription-Region': location,
+            'Content-type': 'application/json',
+            'X-ClientTraceId': uuidv4().toString()
+        },
+        params: {
+            'api-version': '3.0',     
+            'from': req.body.from, // 'en'
+            'to': req.body.to //'es'
+        },
+        data: [{
+            'text': req.body.text,
+            'translation' : req.body.translation
+        }],
+        responseType: 'json'
+    }).then(function(response){
+        console.log(JSON.stringify(response.data, null, 4));
+        res.send(JSON.stringify(response.data, null, 4))
+    }).catch((err)=>{
+        res.status(404).send(err);
+    })
+})
+
 
 app.listen(port);
