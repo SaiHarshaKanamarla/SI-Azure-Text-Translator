@@ -26,8 +26,8 @@ app.post('/api/translate',(req,res)=>{
         },
         params: {
             'api-version': '3.0',
-            'from': 'en',
-            'to': req.body.to
+            'from': req.body.sourcelang,
+            'to': req.body.destlang
         },
         data: [{
             'text': req.body.text
@@ -58,7 +58,7 @@ app.post('/api/detect',(req,res)=>{
             'api-version': '3.0'
         },
         data: [{
-            'text': req.body.text
+            'text': req.body.texttotranslate
         }],
         responseType: 'json'
     }).then(function(response){
