@@ -35,7 +35,7 @@ app.post('/api/translate',(req,res)=>{
         responseType: 'json'
     }).then(function(response){
         console.log(JSON.stringify(response.data, null, 4));
-        res.send(JSON.stringify(response.data, null, 4));
+        res.status(200).send(JSON.stringify(response.data, null, 4));
     }).catch((err)=>{
         res.status(404).send(err);
     })
@@ -63,7 +63,7 @@ app.post('/api/detect',(req,res)=>{
         responseType: 'json'
     }).then(function(response){
         console.log(JSON.stringify(response.data, null, 4));
-        res.send(JSON.stringify(response.data, null, 4))
+        res.status(200).send(JSON.stringify(response.data, null, 4))
         //res.send(JSON.stringify(response.data[0].language+" "+response.data[0].score, null, 4));        
     }).catch((err)=>{
         res.status(404).send(err);
@@ -94,7 +94,7 @@ app.post('/api/transliterate',(req,res)=>{
         responseType: 'json'
     }).then(function(response){
         console.log(JSON.stringify(response.data, null, 4));
-        res.send(JSON.stringify(response.data, null, 4))
+        res.status(200).send(JSON.stringify(response.data, null, 4))
     }).catch((err)=>{
         res.status(404).send(err);
     })
@@ -123,7 +123,7 @@ app.post('/api/length',(req,res)=>{
         responseType: 'json'
     }).then(function(response){
         console.log(JSON.stringify(response.data, null, 4));
-        res.send(JSON.stringify(response.data, null, 4))
+        res.status(200).send(JSON.stringify(response.data, null, 4))
     }).catch((err)=>{
         res.status(404).send(err);
     })
@@ -150,7 +150,7 @@ app.post('/api/len',(req,res)=>{
         responseType: 'json'
     }).then(function(response){
         console.log(JSON.stringify(response.data, null, 4));
-        res.send(JSON.stringify(response.data, null, 4))
+        res.status(200).send(JSON.stringify(response.data, null, 4))
     }).catch((err)=>{
         res.status(404).send(err);
     })
@@ -181,7 +181,7 @@ app.post('/api/lookup',(req,res)=>{
         responseType: 'json'
     }).then(function(response){
         console.log(JSON.stringify(response.data, null, 4));
-        res.send(JSON.stringify(response.data, null, 4))
+        res.status(200).send(JSON.stringify(response.data, null, 4))
     }).catch((err)=>{
         res.status(404).send(err);
     })
@@ -211,7 +211,7 @@ app.post('/api/dictionary-examples',(req,res)=>{
         responseType: 'json'
     }).then(function(response){
         console.log(JSON.stringify(response.data, null, 4));
-        res.send(JSON.stringify(response.data, null, 4))
+        res.status(200).send(JSON.stringify(response.data, null, 4))
     }).catch((err)=>{
         res.status(404).send(err);
     })
