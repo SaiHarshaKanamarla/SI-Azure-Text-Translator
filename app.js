@@ -217,7 +217,7 @@ app.post('/api/dictionary-examples',(req,res)=>{
     })
 })
 
-app.get('/*',(req,res)=>{
+app.get('*',(req,res)=>{
     res.send("Page does not exist");
 })
 
