@@ -58,6 +58,10 @@ const endpoint = "https://api.cognitive.microsofttranslator.com/";
  *      responses:
  *          '200':
  *              description: A successful response
+ *          '400':
+ *              description: Invalid input parameters
+ *          '500':
+ *              description: Server Error
  */
 
 app.post('/api/translate',(req,res)=>{
@@ -84,7 +88,11 @@ app.post('/api/translate',(req,res)=>{
         console.log(JSON.stringify(response.data, null, 4));
         res.status(200).send(JSON.stringify(response.data, null, 4));
     }).catch((err)=>{
-        res.status(404).send(err);
+        if(err.message){
+            res.status(400).send("There is an issue with your input parameters. Please verify");
+        }else{
+            res.status(500).send("Server is not responding. Please try again later");
+        }
     })
 })
 
@@ -107,6 +115,10 @@ app.post('/api/translate',(req,res)=>{
  *      responses:
  *          '200':
  *              description: A successful response
+ *          '400':
+ *              description: Invalid input parameters
+ *          '500':
+ *              description: Server Error
  */
 
 // Detecting Source Language without translation
@@ -133,7 +145,11 @@ app.post('/api/detect',(req,res)=>{
         res.status(200).send(JSON.stringify(response.data, null, 4))
         //res.send(JSON.stringify(response.data[0].language+" "+response.data[0].score, null, 4));        
     }).catch((err)=>{
-        res.status(404).send(err);
+        if(err.message){
+            res.status(400).send("There is an issue with your input parameters. Please verify");
+        }else{
+            res.status(500).send("Server is not responding. Please try again later");
+        }
     })
 })
 
@@ -166,30 +182,6 @@ app.post('/api/transliterate',(req,res)=>{
         res.status(404).send(err);
     })
 })
-
-/**
- * @swagger
- * /api/length:
- *  post:
- *      description: Post Request to detect the length of source language after translation
- *      parameters:
- *          - name: reqBody
- *            description: request body
- *            in: body
- *            schema:
- *              type: object
- *              properties:                
- *                  text:   
- *                    type: string
- *                  to:
- *                    type: string
- *              required:
- *                  - text
- *                  - to
- *      responses:
- *          '200':
- *              description: A successful response
- */
 
 //Get sentence length
 app.post('/api/length',(req,res)=>{
@@ -239,6 +231,10 @@ app.post('/api/length',(req,res)=>{
  *      responses:
  *          '200':
  *              description: A successful response
+ *          '400':
+ *              description: Invalid input parameters
+ *          '500':
+ *              description: Server Error
  */
 
 
@@ -265,12 +261,50 @@ app.post('/api/len',(req,res)=>{
         console.log(JSON.stringify(response.data, null, 4));
         res.status(200).send(JSON.stringify(response.data, null, 4))
     }).catch((err)=>{
-        res.status(404).send(err);
+        if(err.message){
+            res.status(400).send("There is an issue with your input parameters. Please verify");
+        }else{
+            res.status(500).send("Server is not responding. Please try again later");
+        }
     })
 })
 
 //Dictionary lookup (alternate translations)
 //With the endpoint, you can get alternate translations for a word or phrase. For example, when translating the word "shark" from en to es, this endpoint returns both "tiburón" and "escualo".
+
+/**
+ * @swagger
+ * /api/lookup:
+ *  post:
+ *      description: Post Request to fetch the dictionary meaning for a given word
+ *      parameters:
+ *          - name: reqBody
+ *            description: request body
+ *            in: body
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  from:
+ *                    type: string
+ *                  to:
+ *                    type: array
+ *                    items:
+ *                      type: string
+ *                    uniqueItems: true                 
+ *                  text:   
+ *                    type: string
+ *              required:
+ *                  - from
+ *                  - to
+ *                  - text
+ *      responses:
+ *          '200':
+ *              description: A successful response
+ *          '400':
+ *              description: Invalid input parameters
+ *          '500':
+ *              description: Server Error
+ */
 
 app.post('/api/lookup',(req,res)=>{
     axios({
@@ -296,7 +330,11 @@ app.post('/api/lookup',(req,res)=>{
         console.log(JSON.stringify(response.data, null, 4));
         res.status(200).send(JSON.stringify(response.data, null, 4))
     }).catch((err)=>{
-        res.status(404).send(err);
+        if(err.message){
+            res.status(400).send("There is an issue with your input parameters. Please verify");
+        }else{
+            res.status(500).send("Server is not responding. Please try again later");
+        }
     })
 })
 
