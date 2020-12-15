@@ -2,10 +2,10 @@ const express = require('express');
 const axios = require('axios').default;
 const { v4: uuidv4 } = require('uuid');
 const app = express()
-
+var cors = require('cors');
 const port = 3000;
 const bodyParser = require("body-parser");
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -26,8 +26,8 @@ app.post('/api/translate',(req,res)=>{
         },
         params: {
             'api-version': '3.0',
-            'from': req.body.sourcelang,
-            'to': req.body.destlang
+            'from': req.body.from,
+            'to': req.body.to
         },
         data: [{
             'text': req.body.text
