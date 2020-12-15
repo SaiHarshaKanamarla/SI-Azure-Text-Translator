@@ -3,15 +3,62 @@ const axios = require('axios').default;
 const { v4: uuidv4 } = require('uuid');
 const app = express()
 var cors = require('cors');
+const swaggerUI = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
 const port = 3000;
 const bodyParser = require("body-parser");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const options = {
+    definition: {
+        info: {
+            title : 'Swagger API demo',
+            version: '1.0.0',
+            description: 'Microsoft Azure Translate API'
+        }
+    },
+    apis: ['app.js']
+}
+
+const swaggerSpec = swaggerJSDoc(options);
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+
 const subscriptionKey = "610d599b404846a2ab6c2ee10022da68";
 const location = "eastus";
 const endpoint = "https://api.cognitive.microsofttranslator.com/";
+
+/**
+ * @swagger
+ * /api/translate:
+ *  post:
+ *      description: Post Request to translate a given text into required languages
+ *      parameters:
+ *          - name: reqBody
+ *            description: request body
+ *            in: body
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  from:
+ *                    type: string
+ *                  to:
+ *                    type: array
+ *                    items:
+ *                      type: string
+ *                    uniqueItems: true                 
+ *                  text:   
+ *                    type: string
+ *              required:
+ *                  - from
+ *                  - to
+ *                  - text
+ *      responses:
+ *          '200':
+ *              description: A successful response
+ */
 
 app.post('/api/translate',(req,res)=>{
     axios({
@@ -41,6 +88,26 @@ app.post('/api/translate',(req,res)=>{
     })
 })
 
+/**
+ * @swagger
+ * /api/detect:
+ *  post:
+ *      description: Post Request to detect the source language
+ *      parameters:
+ *          - name: reqBody
+ *            description: request body
+ *            in: body
+ *            schema:
+ *              type: object
+ *              properties:                
+ *                  text:   
+ *                    type: string
+ *              required:
+ *                  - text
+ *      responses:
+ *          '200':
+ *              description: A successful response
+ */
 
 // Detecting Source Language without translation
 app.post('/api/detect',(req,res)=>{
@@ -58,7 +125,7 @@ app.post('/api/detect',(req,res)=>{
             'api-version': '3.0'
         },
         data: [{
-            'text': req.body.texttotranslate
+            'text': req.body.text
         }],
         responseType: 'json'
     }).then(function(response){
@@ -100,6 +167,30 @@ app.post('/api/transliterate',(req,res)=>{
     })
 })
 
+/**
+ * @swagger
+ * /api/length:
+ *  post:
+ *      description: Post Request to detect the length of source language after translation
+ *      parameters:
+ *          - name: reqBody
+ *            description: request body
+ *            in: body
+ *            schema:
+ *              type: object
+ *              properties:                
+ *                  text:   
+ *                    type: string
+ *                  to:
+ *                    type: string
+ *              required:
+ *                  - text
+ *                  - to
+ *      responses:
+ *          '200':
+ *              description: A successful response
+ */
+
 //Get sentence length
 app.post('/api/length',(req,res)=>{
     axios({
@@ -128,6 +219,28 @@ app.post('/api/length',(req,res)=>{
         res.status(404).send(err);
     })
 })
+
+/**
+ * @swagger
+ * /api/len:
+ *  post:
+ *      description: Post Request to detect the length of source language after translation
+ *      parameters:
+ *          - name: reqBody
+ *            description: request body
+ *            in: body
+ *            schema:
+ *              type: object
+ *              properties:                
+ *                  text:   
+ *                    type: string
+ *              required:
+ *                  - text
+ *      responses:
+ *          '200':
+ *              description: A successful response
+ */
+
 
 //Getting sentence length without translation
 app.post('/api/len',(req,res)=>{
