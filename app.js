@@ -276,7 +276,7 @@ app.post('/api/len',(req,res)=>{
  * @swagger
  * /api/lookup:
  *  post:
- *      description: Post Request to fetch the dictionary meaning for a given word. For the inputs "from" and "to", provide the languages in encoded form. Like 'en' for english and 'de' for German.The input "text" must be given in the same language as one set in "from" key.
+ *      description: Post Request to fetch the dictionary meaning for a given word. For the inputs "from" and "to", provide the languages in encoded form. Like 'en' for english and 'de' for German. With the endpoint, you can get alternate translations for a word or phrase. For example, when translating the word "shark" from en to es, this endpoint returns both "tiburón" and "escualo". The input "text" must be given in the same language as one set in "from" key.
  *      parameters:
  *          - name: reqBody
  *            description: request body
