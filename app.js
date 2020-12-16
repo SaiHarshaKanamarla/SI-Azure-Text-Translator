@@ -14,9 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const options = {
     definition: {
         info: {
-            title : 'Swagger API demo',
+            title : 'Microsoft Azure Translate API - Swagger Documentation',
             version: '1.0.0',
-            description: 'Microsoft Azure Translate API'
+            description: 'Playground to test your translate API\'s'
         }
     },
     apis: ['app.js']
@@ -34,7 +34,7 @@ const endpoint = "https://api.cognitive.microsofttranslator.com/";
  * @swagger
  * /api/translate:
  *  post:
- *      description: Post Request to translate a given text into required languages
+ *      description: Post Request to translate a given text into required languages. For the inputs "from" and "to", provide the languages in encoded form. Like 'en' for english and 'de' for German. The input "text" must be given in the same language as one set in "from" key.
  *      parameters:
  *          - name: reqBody
  *            description: request body
@@ -276,7 +276,7 @@ app.post('/api/len',(req,res)=>{
  * @swagger
  * /api/lookup:
  *  post:
- *      description: Post Request to fetch the dictionary meaning for a given word
+ *      description: Post Request to fetch the dictionary meaning for a given word. For the inputs "from" and "to", provide the languages in encoded form. Like 'en' for english and 'de' for German.The input "text" must be given in the same language as one set in "from" key.
  *      parameters:
  *          - name: reqBody
  *            description: request body
